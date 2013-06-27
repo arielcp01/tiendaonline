@@ -23,13 +23,15 @@
 			<version>2.2</version>
 			<scope>provided</scope>
 		</dependency>
-		
+
+		<!-- El "scope" no debe de ser "provided" para que funcione con Apache 
+			Tomcat 7 -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
-			<scope>provided</scope>
 		</dependency>
+
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
