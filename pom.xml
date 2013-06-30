@@ -23,6 +23,12 @@
 			<version>2.2</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>javax.persistence</groupId>
+			<artifactId>persistence-api</artifactId>
+			<version>1.0.2</version>
+			<scope>runtime</scope>
+		</dependency>
 
 		<!-- El "scope" no debe de ser "provided" para que funcione con Apache 
 			Tomcat 7 -->

@@ -4,12 +4,12 @@
 	version="3.0">
 	<display-name>Archetype Created Web Application</display-name>
 	<servlet>
-		<servlet-name>ProductoController</servlet-name>
+		<servlet-name>listaProductos</servlet-name>
 		
-		<servlet-class>com.ejemplo.ProductoController</servlet-class>
+		<servlet-class>com.ejemplo.listaProductos</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>ProductoController</servlet-name>
-		<url-pattern>/ProductoController</url-pattern>
+		<servlet-name>listaProductos</servlet-name>
+		<url-pattern>/listaProductos</url-pattern>
 	</servlet-mapping>
 </web-app>

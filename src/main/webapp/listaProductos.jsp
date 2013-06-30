@@ -17,7 +17,7 @@
 				<table>
 					<tr>
 						<td>Nombre:</td>
-						<td><c:out value="${item.nombre}" /></td>
+						<td><c:out value="${item.prddsc}" /></td>
 					</tr>
 					<tr>
 						<td>Precio:</td>

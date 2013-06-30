@@ -2,6 +2,7 @@ package com.ejemplo;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -10,18 +11,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.ejemplo.modelo.Producto;
+
+import com.ejemplo.modelo.Productos;
 
 /**
  * Servlet implementation class ProductoController
  */
-public class ProductoController extends HttpServlet {
+public class listaProductos extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Default constructor.
 	 */
-	public ProductoController() {
+	public listaProductos() {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -33,7 +35,7 @@ public class ProductoController extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		String path = "listaProductos.jsp";
 
-		List<Producto> listaProductos = cargarListaProductos();
+		List<Productos> listaProductos = cargarListaProductos();
 
 		request.setAttribute("lista", listaProductos);
 		
@@ -43,14 +45,12 @@ public class ProductoController extends HttpServlet {
 		requestDispatcher.forward(request, response);
 	}
 
-	private List<Producto> cargarListaProductos() {
-		ArrayList<Producto> lista = new ArrayList<Producto>();
-		Producto p1 = new Producto("Adidas");
-		Producto p2 = new Producto("Nike");
-		Producto p3 = new Producto("Lacoste");
+	private List<Productos> cargarListaProductos() {
+		ArrayList<Productos> lista = new ArrayList<Productos>();
+		Productos p1 = new Productos();
+		p1.getProducto();
 		lista.add(p1);
-		lista.add(p2);
-		lista.add(p3);
+		
 		return lista;
 	}
 
