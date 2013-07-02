@@ -5,19 +5,22 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
-import com.ejemplo.modelo.Productos;
+import com.ejemplo.model.*;
+import com.ejemplo.persistencia.*;
 
 /**
  * Servlet implementation class ProductoController
  */
 public class listaProductos extends HttpServlet {
+	private static final String LISTA_PRODUCTOS_JSP = "listaProductos.jsp";
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -33,25 +36,39 @@ public class listaProductos extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		String path = "listaProductos.jsp";
-
-		List<Productos> listaProductos = cargarListaProductos();
-
+		// Obtener la lista de productos
+		List<Producto> listaProductos = cargarListaProductos();
+		// Agregar la lista cargada como un atributo
 		request.setAttribute("lista", listaProductos);
-		
-		
 		RequestDispatcher requestDispatcher = request
-				.getRequestDispatcher(path);
+				.getRequestDispatcher(LISTA_PRODUCTOS_JSP);
 		requestDispatcher.forward(request, response);
+		// String path = "listaProductos.jsp";
+		/*
+		 * List<Productos> listaProductos = cargarListaProductos();
+		 * 
+		 * request.setAttribute("lista", listaProductos);
+		 * 
+		 * 
+		 * RequestDispatcher requestDispatcher = request
+		 * .getRequestDispatcher(path); requestDispatcher.forward(request,
+		 * response);
+		 */
+
 	}
 
-	private List<Productos> cargarListaProductos() {
-		ArrayList<Productos> lista = new ArrayList<Productos>();
-		Productos p1 = new Productos();
-		p1.getProducto();
-		lista.add(p1);
-		
-		return lista;
+	private List<Producto> cargarListaProductos() {
+		/*
+		 * ArrayList<Productos> lista = new ArrayList<Productos>(); Productos p1
+		 * = new Productos(); p1.getProducto(); lista.add(p1);
+		 * 
+		 * return lista;
+		 */
+		EntityManager em = PersistenciaCore.getInstance().createEntityManager();
+		Query query = em.createQuery("FROM " + Producto.class.getName());
+		@SuppressWarnings("unchecked")
+		List<Producto> resultList = query.getResultList();
+		return resultList;
 	}
 
 	/**
