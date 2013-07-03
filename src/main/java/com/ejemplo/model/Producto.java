@@ -1,119 +1,110 @@
 package com.ejemplo.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 /**
  * The persistent class for the productos database table.
  * 
  */
 @Entity
-@Table(name="productos")
-@NamedQuery(name="Producto.findAll", query="SELECT p FROM Producto p")
+@Table(name = "productos")
+@NamedQuery(name = "Producto.findAll", query = "SELECT p FROM Producto p")
 public class Producto implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private Integer prdid;
+	@SequenceGenerator(name = "productoSequence", sequenceName = "productoSequence", allocationSize = 1, initialValue = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "productoSequence")
+	private Integer id;
 
-	private BigDecimal prdcant;
+	private Integer cantidad;
 
-	private String prddsc;
+	private String descripcion;
 
-	private byte[] prdimg;
+	// private byte[] prdimg;
 
-	private BigDecimal prdiva;
+	private BigDecimal iva;
 
-	private String prdobs;
+	private String observaciones;
 
-	private BigDecimal prdprice;
+	private BigDecimal precio;
 
-	//bi-directional many-to-one association to Detallecompra
-	@OneToMany(mappedBy="producto")
-	private List<Detallecompra> detallecompras;
+	// //bi-directional many-to-one association to Detallecompra
+	// @OneToMany(mappedBy="producto")
+	// private List<Detallecompra> detallecompras;
 
 	public Producto() {
 	}
 
-	public Integer getPrdid() {
-		return this.prdid;
+	public Integer getId() {
+		return id;
 	}
 
-	public void setPrdid(Integer prdid) {
-		this.prdid = prdid;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
-	public BigDecimal getPrdcant() {
-		return this.prdcant;
+	public Integer getCantidad() {
+		return cantidad;
 	}
 
-	public void setPrdcant(BigDecimal prdcant) {
-		this.prdcant = prdcant;
+	public void setCantidad(Integer cantidad) {
+		this.cantidad = cantidad;
 	}
 
-	public String getPrddsc() {
-		return this.prddsc;
+	public String getDescripcion() {
+		return descripcion;
 	}
 
-	public void setPrddsc(String prddsc) {
-		this.prddsc = prddsc;
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
 	}
 
-	public byte[] getPrdimg() {
-		return this.prdimg;
+	public BigDecimal getIva() {
+		return iva;
 	}
 
-	public void setPrdimg(byte[] prdimg) {
-		this.prdimg = prdimg;
+	public void setIva(BigDecimal iva) {
+		this.iva = iva;
 	}
 
-	public BigDecimal getPrdiva() {
-		return this.prdiva;
+	public String getObservaciones() {
+		return observaciones;
 	}
 
-	public void setPrdiva(BigDecimal prdiva) {
-		this.prdiva = prdiva;
+	public void setObservaciones(String observaciones) {
+		this.observaciones = observaciones;
 	}
 
-	public String getPrdobs() {
-		return this.prdobs;
+	public BigDecimal getPrecio() {
+		return precio;
 	}
 
-	public void setPrdobs(String prdobs) {
-		this.prdobs = prdobs;
+	public void setPrecio(BigDecimal precio) {
+		this.precio = precio;
 	}
 
-	public BigDecimal getPrdprice() {
-		return this.prdprice;
-	}
-
-	public void setPrdprice(BigDecimal prdprice) {
-		this.prdprice = prdprice;
-	}
-
-	public List<Detallecompra> getDetallecompras() {
-		return this.detallecompras;
-	}
-
-	public void setDetallecompras(List<Detallecompra> detallecompras) {
-		this.detallecompras = detallecompras;
-	}
-
-	public Detallecompra addDetallecompra(Detallecompra detallecompra) {
-		getDetallecompras().add(detallecompra);
-		detallecompra.setProducto(this);
-
-		return detallecompra;
-	}
-
-	public Detallecompra removeDetallecompra(Detallecompra detallecompra) {
-		getDetallecompras().remove(detallecompra);
-		detallecompra.setProducto(null);
-
-		return detallecompra;
-	}
+	// public Detallecompra addDetallecompra(Detallecompra detallecompra) {
+	// getDetallecompras().add(detallecompra);
+	// detallecompra.setProducto(this);
+	//
+	// return detallecompra;
+	// }
+	//
+	// public Detallecompra removeDetallecompra(Detallecompra detallecompra) {
+	// getDetallecompras().remove(detallecompra);
+	// detallecompra.setProducto(null);
+	//
+	// return detallecompra;
+	// }
 
 }

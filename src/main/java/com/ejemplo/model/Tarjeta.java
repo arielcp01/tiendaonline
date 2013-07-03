@@ -1,150 +1,141 @@
 package com.ejemplo.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * The persistent class for the tarjeta database table.
  * 
  */
 @Entity
-@NamedQuery(name="Tarjeta.findAll", query="SELECT t FROM Tarjeta t")
+@NamedQuery(name = "Tarjeta.findAll", query = "SELECT t FROM Tarjeta t")
 public class Tarjeta implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private long tarnro;
+	@SequenceGenerator(name = "tarjetaSequence", sequenceName = "tarjetaSequence", allocationSize = 1, initialValue = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tarjetaSequence")
+	private Long id;
 
-	private BigDecimal paisid;
+	private String direccion;
 
-	private String tarcalle;
+	private String ciudad;
 
-	private String tarciu;
-
-	private BigDecimal tardig;
+	private BigDecimal digitoVerificador;
 
 	@Temporal(TemporalType.DATE)
-	private Date tarfchven;
+	private Date fechaDeVencimiento;
 
-	private String tarmar;
+	private String marca;
 
-	private String tarnom;
+	private String nombre;
 
-	private String tarobs;
+	private String observaciones;
 
-	private String tartel;
+	private String telefono;
 
-	//bi-directional many-to-one association to Ordencompra
-	@OneToMany(mappedBy="tarjeta")
-	private List<Ordencompra> ordencompras;
+//	// bi-directional many-to-one association to Ordencompra
+//	@OneToMany(mappedBy = "tarjeta")
+//	private List<Ordencompra> ordencompras;
 
 	public Tarjeta() {
 	}
 
-	public long getTarnro() {
-		return this.tarnro;
+	public Long getId() {
+		return id;
 	}
 
-	public void setTarnro(long tarnro) {
-		this.tarnro = tarnro;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
-	public BigDecimal getPaisid() {
-		return this.paisid;
+	public String getDireccion() {
+		return direccion;
 	}
 
-	public void setPaisid(BigDecimal paisid) {
-		this.paisid = paisid;
+	public void setDireccion(String direccion) {
+		this.direccion = direccion;
 	}
 
-	public String getTarcalle() {
-		return this.tarcalle;
+	public String getCiudad() {
+		return ciudad;
 	}
 
-	public void setTarcalle(String tarcalle) {
-		this.tarcalle = tarcalle;
+	public void setCiudad(String ciudad) {
+		this.ciudad = ciudad;
 	}
 
-	public String getTarciu() {
-		return this.tarciu;
+	public BigDecimal getDigitoVerificador() {
+		return digitoVerificador;
 	}
 
-	public void setTarciu(String tarciu) {
-		this.tarciu = tarciu;
+	public void setDigitoVerificador(BigDecimal digitoVerificador) {
+		this.digitoVerificador = digitoVerificador;
 	}
 
-	public BigDecimal getTardig() {
-		return this.tardig;
+	public Date getFechaDeVencimiento() {
+		return fechaDeVencimiento;
 	}
 
-	public void setTardig(BigDecimal tardig) {
-		this.tardig = tardig;
+	public void setFechaDeVencimiento(Date fechaDeVencimiento) {
+		this.fechaDeVencimiento = fechaDeVencimiento;
 	}
 
-	public Date getTarfchven() {
-		return this.tarfchven;
+	public String getMarca() {
+		return marca;
 	}
 
-	public void setTarfchven(Date tarfchven) {
-		this.tarfchven = tarfchven;
+	public void setMarca(String marca) {
+		this.marca = marca;
 	}
 
-	public String getTarmar() {
-		return this.tarmar;
+	public String getNombre() {
+		return nombre;
 	}
 
-	public void setTarmar(String tarmar) {
-		this.tarmar = tarmar;
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 
-	public String getTarnom() {
-		return this.tarnom;
+	public String getObservaciones() {
+		return observaciones;
 	}
 
-	public void setTarnom(String tarnom) {
-		this.tarnom = tarnom;
+	public void setObservaciones(String observaciones) {
+		this.observaciones = observaciones;
 	}
 
-	public String getTarobs() {
-		return this.tarobs;
+	public String getTelefono() {
+		return telefono;
 	}
 
-	public void setTarobs(String tarobs) {
-		this.tarobs = tarobs;
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
 	}
 
-	public String getTartel() {
-		return this.tartel;
-	}
-
-	public void setTartel(String tartel) {
-		this.tartel = tartel;
-	}
-
-	public List<Ordencompra> getOrdencompras() {
-		return this.ordencompras;
-	}
-
-	public void setOrdencompras(List<Ordencompra> ordencompras) {
-		this.ordencompras = ordencompras;
-	}
-
-	public Ordencompra addOrdencompra(Ordencompra ordencompra) {
-		getOrdencompras().add(ordencompra);
-		ordencompra.setTarjeta(this);
-
-		return ordencompra;
-	}
-
-	public Ordencompra removeOrdencompra(Ordencompra ordencompra) {
-		getOrdencompras().remove(ordencompra);
-		ordencompra.setTarjeta(null);
-
-		return ordencompra;
-	}
+	
+	// public Ordencompra addOrdencompra(Ordencompra ordencompra) {
+	// getOrdencompras().add(ordencompra);
+	// ordencompra.setTarjeta(this);
+	//
+	// return ordencompra;
+	// }
+	//
+	// public Ordencompra removeOrdencompra(Ordencompra ordencompra) {
+	// getOrdencompras().remove(ordencompra);
+	// ordencompra.setTarjeta(null);
+	//
+	// return ordencompra;
+	// }
 
 }
