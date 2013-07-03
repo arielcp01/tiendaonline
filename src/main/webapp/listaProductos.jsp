@@ -17,7 +17,7 @@
 				<table>
 					<tr>
 						<td>Nombre:</td>
-						<td><c:out value="${item.prdsc}" /></td>
+						
 					</tr>
 					<tr>
 						<td>Precio:</td>
@@ -27,7 +27,8 @@
 						<td colspan="2">Disponible</td>
 					</tr>
 					<tr>
-						<td colspan="2"><a href="#">Ver detalle</a></td>
+						<td colspan="2"><a href="verProducto?productoId=${item.id}">Ver
+								detalle</a></td>
 					</tr>
 				</table>
 			</td>

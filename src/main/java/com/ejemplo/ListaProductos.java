@@ -1,8 +1,6 @@
 package com.ejemplo;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -13,20 +11,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.ejemplo.model.*;
-import com.ejemplo.persistencia.*;
+import com.ejemplo.model.Producto;
+import com.ejemplo.persistencia.PersistenciaCore;
 
 /**
  * Servlet implementation class ProductoController
  */
-public class listaProductos extends HttpServlet {
+public class ListaProductos extends HttpServlet {
 	private static final String LISTA_PRODUCTOS_JSP = "listaProductos.jsp";
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Default constructor.
 	 */
-	public listaProductos() {
+	public ListaProductos() {
 		// TODO Auto-generated constructor stub
 	}
 
