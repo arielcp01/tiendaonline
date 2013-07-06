@@ -1,8 +1,8 @@
-
-    create table public.DetalleCompra (
+   create table public.DetalleCompra (
         id int8 not null,
         cantidad int8,
         total numeric(19, 2),
+        ordenCompra_id int8, 
         primary key (id)
     );
 
@@ -13,6 +13,7 @@
         fechaDeCompra date,
         total numeric(19, 2),
         usuario_id int8,
+        tarjeta_id int8,
         primary key (id)
     );
 
@@ -52,6 +53,17 @@
         add constraint FKD56B31486CC4E740 
         foreign key (usuario_id) 
         references public.Usuario;
+         
+        
+     alter table public.DetalleCompra 
+         add constraint DetalleCompra_ordenCompra10 
+         foreign key (ordenCompra_id) 
+        references public.OrdenCompra; 
+        
+   alter table public.OrdenCompra 
+         add constraint Tarjeta_ordenCompra10 
+         foreign key (tarjeta_id) 
+        references public.Tarjeta;      
 
     create sequence public.DetalleCompraSequence;
 

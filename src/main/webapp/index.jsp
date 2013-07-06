@@ -1,5 +1,7 @@
 <html>
-<body>
-<h2>Hola Mundo de nuevo!</h2>
-</body>
+	<head>
+		<title>index.jsp</title>
+	<head>
+	<body>
+	</body>
 </html>
