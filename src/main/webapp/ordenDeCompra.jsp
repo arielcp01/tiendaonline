@@ -22,30 +22,31 @@
 
 		<tr>
 			<td colspan="4" align="center"> 
-				<h2 align="center">CATALOGO DE PRODUCTOS</h2>
+				<h2 align="center">ORDENES DE COMPRA</h2>
 
 				<table id="productos">
+					<tr class="alt">
+							<td><h4>Orden N°</h4></td>
+							<td><h4>Usuario</h4></td>
+							<td><h4>Fecha</h4></td>
+							<td><h4>Total</h4></td>
+							<td><h4>Estado</h4></td>
+							<td><h4>Opciones</h4></td>
+					</tr>
 					<c:forEach items="${lista}" var="item">
-						<tr class="alt">
-							<td rowspan="3"><img alt="${item.descripcion}" src="img/productos/${item.id}.jpg" width="120" height="100"></td>
-							<td>Nombre:</td>
-							<td>${item.descripcion}</td>
-						</tr>
 						<tr>
-							<td>Precio:</td>
-							<td>${item.precio}</td>
-						</tr>
-						<tr class="alt">
-							<td>Disponible:</td>
-							<td>${item.cantidad}</td>
-						</tr>
-						<tr>
-							<td align="right" colspan="4"><a
-								href="verProducto?productoId=${item.id}"><img alt="Detalle" src="img/detalle.png"width="30" height="30" ></a></td>
+							<td>${item.id}</td>
+							<td>${item.usuario.nombre}</td>
+							<td>${item.fechaDeCompra}</td>
+							<td>${item.total}</td>
+							<td></td>
+							<td></td>
+							<td><a href="#"><img alt="Detalle" src="img/detalle.png" width="15" height="15"></a>
+							<a href="#"><img alt="Eliminar" src="img/eliminar.png" width="15" height="15"></a>
+							</td>
 						</tr>
 					</c:forEach>
 				</table>
-
 			</td>
 		</tr>
 

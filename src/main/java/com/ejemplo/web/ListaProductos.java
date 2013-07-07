@@ -1,4 +1,4 @@
-package com.ejemplo;
+package com.ejemplo.web;
 
 import java.io.IOException;
 import java.util.List;
