@@ -2,66 +2,57 @@
 <html>
 <head>
 <title>Lista de productos</title>
-<link rel="stylesheet" type="text/css" href="css/common.css"/>
+<link rel="stylesheet" type="text/css" href="css/common.css" />
 
 </head>
 <body>
 
-<table  width="1000" border="0"  align="center">
-<tr>
-<td colspan="4" style="background-color:#FFA500;" align="center">
-<h1>TiendaOnLine</h1>
-</td>
-<tr style="background-color:#FFA500;" align="center">
-<td><a href="#">Home</a></td>
-<td><a href="#">Catalogo</a></td>
-<td><a href="#">Carrito</a></td>
-<td><a href="#">Ordenes de Compra</a></td>
-</tr>
-</tr>
 
-<tr>
-<td colspan="4" style="background-color:#EEEEEE;height:200px;width:400px;">
-<h1 align="center">Catalogo de Productos</h1>
-
-<table align="center" width="500" border="0">
-	<c:forEach items="${lista}" var="item">
+	<table id="top" width="500" align="center">
+		<tr class="blk">
+			<td colspan="4" align="center">
+				<h1><img alt="tiendaOnLine" src="img/logo.png"></h1>
+			</td>
+		<tr class="blk"  align="center">
+			<td><a href="#"><img src="img/home.png"></a></td>
+			<td><a href="#"><img src="img/catalogo.png"></a></td>
+			<td><a href="#"><img src="img/carrito.png"></td>
+			<td><a href="#"><img src="img/ordenes_compra.png"></a></td>
+		</tr>
 
 		<tr>
-			<td>Imagen1</td>
-			<td>
-				<table border="0" padding: 5px;>
-					<tr>
-						<td>Nombre:</td>
-						<td>${item.descripcion}</td>
-					</tr>
-					<tr>
-						<td>Precio:</td>
-						<td>${item.precio}</td>
-					</tr>
-					<tr>
-						<td>Disponible:</td>
-						<td>${item.cantidad}</td>
-					</tr>
-					<tr>
-						<td align="right" colspan="2"><a href="verProducto?productoId=${item.id}" target="contenido">Ver
-								detalle</a></td>
-					</tr>
+			<td colspan="4" align="center"> 
+				<h2 align="center">CATALOGO DE PRODUCTOS</h2>
+
+				<table id="productos">
+					<c:forEach items="${lista}" var="item">
+						<tr class="alt">
+							<td rowspan="3"><img alt="${item.descripcion}" src="img/productos/${item.id}.jpg" width="120" height="100"></td>
+							<td>Nombre:</td>
+							<td>${item.descripcion}</td>
+						</tr>
+						<tr>
+							<td>Precio:</td>
+							<td>${item.precio}</td>
+						</tr>
+						<tr class="alt">
+							<td>Disponible:</td>
+							<td>${item.cantidad}</td>
+						</tr>
+						<tr>
+							<td align="right" colspan="4"><a
+								href="verProducto?productoId=${item.id}" target="contenido"><img alt="Detalle" src="img/detalle.png"width="30" height="30" ></a></td>
+						</tr>
+					</c:forEach>
 				</table>
+
 			</td>
 		</tr>
 
-	</c:forEach>
-</table>
-
-</td>
-</tr>
-
-<tr>
-<td colspan="4" style="background-color:#FFA500;text-align:center;">
-Copyright © tiendaonline.com</td>
-</tr>
-</table>
+		<tr class="blk" align="center">
+			<td colspan="4">Copyright © tiendaonline.com</td>
+		</tr>
+	</table>
 
 </body>
 </html>
