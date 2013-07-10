@@ -4,11 +4,11 @@
              xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
              version="2.0">
    <persistence-unit name="my-webapp">
-		<class>com.ejemplo.model.Usuario</class>
+		<class>com.ejemplo.model.DetalleCompra</class>
 		<class>com.ejemplo.model.OrdenCompra</class>
 		<class>com.ejemplo.model.Producto</class>
 		<class>com.ejemplo.model.Tarjeta</class>
-		<class>com.ejemplo.model.DetalleCompra</class>
+		<class>com.ejemplo.model.Usuario</class>
 		<properties>
 			<property name="hibernate.connection.username" value="postgres" />
 			<property name="hibernate.connection.password" value="postgres" />

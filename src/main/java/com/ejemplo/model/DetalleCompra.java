@@ -10,12 +10,14 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 /**
  * The persistent class for the detallecompra database table.
  * 
  */
 @Entity
+@Table(name = "detallecompra")
 @NamedQuery(name = "DetalleCompra.findAll", query = "SELECT d FROM DetalleCompra d")
 public class DetalleCompra implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -55,13 +57,9 @@ public class DetalleCompra implements Serializable {
 
 	//
 	// // bi-directional many-to-one association to Ordencompra
-	 @ManyToOne
+	@ManyToOne
+	private Producto producto;
 	private OrdenCompra ordenCompra;
-	//
-	// // bi-directional many-to-one association to Producto
-	// @ManyToOne
-	// @JoinColumn(name = "prdid")
-	// private Producto producto;
 
 	public OrdenCompra getOrdenCompra() {
 		return ordenCompra;
@@ -71,7 +69,11 @@ public class DetalleCompra implements Serializable {
 		this.ordenCompra = ordenCompra;
 	}
 
-	public DetalleCompra() {
+	public Producto getProducto() {
+		return producto;
 	}
 
+	public void setProducto(Producto producto) {
+		this.producto = producto;
+	}
 }

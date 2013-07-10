@@ -16,7 +16,7 @@
 		<tr class="blk"  align="center">
 			<td><a href="listaProductos"><img src="img/home.png"></a></td>
 			<td><a href="listaProductos"><img src="img/catalogo.png"></a></td>
-			<td><a href="#"><img src="img/carrito.png"></td>
+			<td><a href="#"><img src="img/carrito.png"></a></td>
 			<td><a href="ordenDeCompra"><img src="img/ordenes_compra.png"></a></td>
 		</tr>
 
@@ -27,7 +27,7 @@
 				<table id="productos">
 					<c:forEach items="${lista}" var="item">
 						<tr class="alt">
-							<td rowspan="3"><img alt="${item.descripcion}" src="img/productos/${item.id}.jpg" width="120" height="100"></td>
+							<td rowspan="4" align="center"><img alt="${item.descripcion}" src="img/productos/${item.id}.jpg" width="120" height="100"></td>
 							<td>Nombre:</td>
 							<td>${item.descripcion}</td>
 						</tr>
@@ -40,8 +40,8 @@
 							<td>${item.cantidad}</td>
 						</tr>
 						<tr>
-							<td align="right" colspan="4"><a
-								href="verProducto?productoId=${item.id}"><img alt="Detalle" src="img/detalle.png"width="30" height="30" ></a></td>
+							<td align="right" colspan="3"><a
+								href="detalleProductos?productoId=${item.id}"><img alt="Detalle" src="img/detalle.png"width="30" height="30" ></a></td>
 						</tr>
 					</c:forEach>
 				</table>

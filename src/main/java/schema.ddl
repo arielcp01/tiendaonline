@@ -2,7 +2,8 @@
         id int8 not null,
         cantidad int8,
         total numeric(19, 2),
-        ordenCompra_id int8, 
+        ordencompra_id int8,
+        producto_id int4,
         primary key (id)
     );
 
@@ -56,12 +57,17 @@
          
         
      alter table public.DetalleCompra 
-         add constraint DetalleCompra_ordenCompra10 
-         foreign key (ordenCompra_id) 
-        references public.OrdenCompra; 
+         add constraint DetalleCompra_ordenCompra 
+         foreign key (ordenCompra_id)
+        references public.OrdenCompra;
+        
+     alter table public.DetalleCompra   
+        add constraint DetalleCompra_producto
+         foreign key (producto_id)
+         references public.Productos;
         
    alter table public.OrdenCompra 
-         add constraint Tarjeta_ordenCompra10 
+         add constraint Tarjeta_ordenCompra
          foreign key (tarjeta_id) 
         references public.Tarjeta;      
 

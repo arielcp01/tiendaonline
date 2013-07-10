@@ -2,12 +2,15 @@ package com.ejemplo.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -30,17 +33,11 @@ public class Producto implements Serializable {
 
 	private String descripcion;
 
-	// private byte[] prdimg;
-
 	private BigDecimal iva;
 
 	private String observaciones;
 
 	private BigDecimal precio;
-
-	// //bi-directional many-to-one association to Detallecompra
-	// @OneToMany(mappedBy="producto")
-	// private List<Detallecompra> detallecompras;
 
 	public Producto() {
 	}
@@ -92,19 +89,15 @@ public class Producto implements Serializable {
 	public void setPrecio(BigDecimal precio) {
 		this.precio = precio;
 	}
+	
+	@OneToMany(mappedBy = "producto")
+	private List<DetalleCompra> detalleCompra = new ArrayList<DetalleCompra>();
 
-	// public Detallecompra addDetallecompra(Detallecompra detallecompra) {
-	// getDetallecompras().add(detallecompra);
-	// detallecompra.setProducto(this);
-	//
-	// return detallecompra;
-	// }
-	//
-	// public Detallecompra removeDetallecompra(Detallecompra detallecompra) {
-	// getDetallecompras().remove(detallecompra);
-	// detallecompra.setProducto(null);
-	//
-	// return detallecompra;
-	// }
+	public List<DetalleCompra> getDetalleCompra() {
+		return detalleCompra;
+	}
 
+	public void setDetalleCompra(List<DetalleCompra> detalleCompra) {
+		this.detalleCompra = detalleCompra;
+	}
 }
