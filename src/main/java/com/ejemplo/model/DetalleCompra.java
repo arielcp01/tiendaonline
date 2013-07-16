@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -51,29 +50,29 @@ public class DetalleCompra implements Serializable {
 		this.total = total;
 	}
 
+	public Integer getProducto_id() {
+		return producto_id;
+	}
+
+	public void setProducto_id(Integer producto_id) {
+		this.producto_id = producto_id;
+	}
+
+	public Long getOrdencompra_id() {
+		return ordencompra_id;
+	}
+
+	public void setOrdencompra_id(Long ordencompra_id) {
+		this.ordencompra_id = ordencompra_id;
+	}
+
 	private Long cantidad;
 
 	private BigDecimal total;
+	private Integer producto_id;
+	private Long ordencompra_id;
 
 	//
 	// // bi-directional many-to-one association to Ordencompra
-	@ManyToOne
-	private Producto producto;
-	private OrdenCompra ordenCompra;
-
-	public OrdenCompra getOrdenCompra() {
-		return ordenCompra;
-	}
-
-	public void setOrdenCompra(OrdenCompra ordenCompra) {
-		this.ordenCompra = ordenCompra;
-	}
-
-	public Producto getProducto() {
-		return producto;
-	}
-
-	public void setProducto(Producto producto) {
-		this.producto = producto;
-	}
+	
 }

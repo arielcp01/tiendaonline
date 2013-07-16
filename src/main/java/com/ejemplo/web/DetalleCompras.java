@@ -1,31 +1,29 @@
 package com.ejemplo.web;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.ejemplo.model.OrdenCompra;
+import com.ejemplo.model.DetalleCompra;
 import com.ejemplo.persistencia.PersistenciaCore;
 
 /**
  * Servlet implementation class OrdenDeCompra
  */
 
-public class OrdenDeCompra extends HttpServlet {
+public class DetalleCompras extends HttpServlet {
 	private static final String LISTA_ORDEN_JSP = "ordenDeCompra.jsp";
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public OrdenDeCompra() {
+    public DetalleCompras() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,10 +32,15 @@ public class OrdenDeCompra extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		List<OrdenCompra> listaOrden = cargarOrdenCompra();
-		request.setAttribute("lista", listaOrden);
-//		List<DetalleCompra> listaDetalle = cargarDetalle();
-//		request.setAttribute("listadetalle", listaDetalle);
+		String idStr = request.getParameter("id");
+		System.out.println("idStr" + idStr);
+		if (idStr == null) {
+			response.sendError(500, "Detalle id no seteado");
+			return;
+		}
+		Long id = (long) Integer.parseInt(idStr);
+		DetalleCompra listaDetalle = cargarDetalle(id);
+		request.setAttribute("listadetalle", listaDetalle);
 		// Agregar la lista cargada como un atributo
 		RequestDispatcher requestDispatcher = request
 				.getRequestDispatcher(LISTA_ORDEN_JSP);
@@ -51,22 +54,11 @@ public class OrdenDeCompra extends HttpServlet {
 		// TODO Auto-generated method stub
 	}
 
-	private List<OrdenCompra> cargarOrdenCompra() {
+
+	private DetalleCompra cargarDetalle(Long id) {
 		EntityManager em = PersistenciaCore.getInstance().createEntityManager();
-		Query query = em.createQuery("FROM " + OrdenCompra.class.getName());
-		@SuppressWarnings("unchecked")
-		List<OrdenCompra> resultList = query.getResultList();
-		em.close();
-		return resultList;
+		DetalleCompra detallecompra = em.find(DetalleCompra.class,id);
+		return detallecompra;
 	}
-/*
-	private List<DetalleCompra> cargarDetalle() {
-		EntityManager em = PersistenciaCore.getInstance().createEntityManager();
-		Query query = em.createQuery("FROM " + DetalleCompra.class.getName());
-		@SuppressWarnings("unchecked")
-		List<DetalleCompra> resultList = query.getResultList();
-		em.close();
-		return resultList;
-	}
-	*/
+	
 }

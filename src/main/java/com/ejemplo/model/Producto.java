@@ -2,15 +2,12 @@ package com.ejemplo.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -90,14 +87,4 @@ public class Producto implements Serializable {
 		this.precio = precio;
 	}
 	
-	@OneToMany(mappedBy = "producto")
-	private List<DetalleCompra> detalleCompra = new ArrayList<DetalleCompra>();
-
-	public List<DetalleCompra> getDetalleCompra() {
-		return detalleCompra;
-	}
-
-	public void setDetalleCompra(List<DetalleCompra> detalleCompra) {
-		this.detalleCompra = detalleCompra;
-	}
 }

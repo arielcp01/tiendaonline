@@ -16,9 +16,13 @@
 		<servlet-name>AgregarCarrito</servlet-name>
 		<servlet-class>com.ejemplo.web.AgregarCarrito</servlet-class>
 	</servlet>
-		<servlet>
+	<servlet>
 		<servlet-name>OrdenDeCompra</servlet-name>
 		<servlet-class>com.ejemplo.web.OrdenDeCompra</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>DetalleCompras</servlet-name>
+		<servlet-class>com.ejemplo.web.DetalleCompras</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>ListaProductos</servlet-name>
@@ -35,5 +39,9 @@
 	<servlet-mapping>
 		<servlet-name>OrdenDeCompra</servlet-name>
 		<url-pattern>/ordenDeCompra</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>DetalleCompras</servlet-name>
+		<url-pattern>/detalleCompras</url-pattern>
 	</servlet-mapping>
 </web-app>

@@ -3,7 +3,6 @@ package com.ejemplo.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,7 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -42,17 +40,7 @@ public class OrdenCompra implements Serializable {
 	private BigDecimal total;
 
 	// // bi-directional many-to-one association to Detallecompra
-	@OneToMany(mappedBy = "ordenCompra")
-	private List<DetalleCompra> detallesDeCompra;
-
-	public List<DetalleCompra> getDetallesDeCompra() {
-		return detallesDeCompra;
-	}
-
-	public void setDetallesDeCompra(List<DetalleCompra> detallesDeCompra) {
-		this.detallesDeCompra = detallesDeCompra;
-	}
-
+	
 	//
 	// // bi-directional many-to-one association to Tarjeta
 	// @ManyToOne
