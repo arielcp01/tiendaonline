@@ -34,12 +34,9 @@ public class CompraTarjeta extends HttpServlet {
 				.getAttribute("carrito");
 
 		if (carrito == null) {
-			// System.out.println("Error no tiene cargado nada Aún ");
+			// System.out.println("Error no tiene cargado nada Aï¿½n ");
 			// response.sendError(500, "Falta Cantidad de Producto");
-			RequestDispatcher requestDispatcher = request
-					.getRequestDispatcher("/listaProductos");
-			requestDispatcher.forward(request, response);
-
+			response.sendRedirect("/my-webapp/listaProductos");
 		} else {
 
 			total = carrito.getCantTotal();
