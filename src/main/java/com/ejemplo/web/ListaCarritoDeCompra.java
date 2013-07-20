@@ -36,7 +36,7 @@ public class ListaCarritoDeCompra extends HttpServlet {
 		BigDecimal total = new BigDecimal(0);
 		BigDecimal totalIva = new BigDecimal(0);
 		BigDecimal granTotal = new BigDecimal(0);
-		
+		String finalizarVisible = "visible";
 		try{
 			CarritoDeCompra carrito = null;
 			carrito = (CarritoDeCompra) request.getSession().getAttribute("carrito");
@@ -55,11 +55,14 @@ public class ListaCarritoDeCompra extends HttpServlet {
 			request.setAttribute("total", total);
 			request.setAttribute("totalIva", totalIva);
 			request.setAttribute("granTotal", granTotal);
+			request.setAttribute("finalizarVisible", finalizarVisible);
 		}catch(NullPointerException e) {
 			request.setAttribute("listaCarrito", listaCarrito);
 			request.setAttribute("total", total);
 			request.setAttribute("totalIva", totalIva);
 			request.setAttribute("granTotal", granTotal);
+			finalizarVisible = "hidden";
+			request.setAttribute("finalizarVisible", finalizarVisible);
 		} finally {
 			RequestDispatcher requestDispatcher = request
 					.getRequestDispatcher(LISTA_PRODUCTOS_JSP);

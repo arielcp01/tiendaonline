@@ -63,7 +63,7 @@
 						<td>${granTotal}</td>
 					</tr>
 				</table>
-				<button> <a href="finalizarCompra">Finalizar Compra</a></button>
+				<button style="visibility:${finalizarVisible}"> <a href="finalizarCompra">Finalizar Compra</a></button>
 				<button> <a href="listaProductos">Continuar Comprando</a></button>
 		</tr>
 
