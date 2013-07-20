@@ -45,33 +45,36 @@ public class FinalizarCompra extends HttpServlet {
 
 		EntityTransaction transaction = em.getTransaction();
 		transaction.begin();
-
+		CarritoDeCompra carrito = new CarritoDeCompra();
 		try {
-			CarritoDeCompra carrito = new CarritoDeCompra();
 			carrito = (CarritoDeCompra) request.getSession().getAttribute("carrito");
-			List<DetalleCarritoProducto> listaCarrito = carrito.getProductos();
-			
-			Usuario usu1 = new Usuario();
-			usu1.setId(0L);
-			
-			OrdenCompra odc = new OrdenCompra();
-			odc.setCantidad(carrito.getCantProducto());
-			odc.setEstado(new String("P"));
-			odc.setFechaDeCompra(new Date());
-			odc.setTotal(carrito.getTotal());
-			odc.setUsuario(usu1);
-
-			em.persist(odc);
-			
-			for (DetalleCarritoProducto detalleCarritoProducto : listaCarrito) {
-				DetalleCompra detalle = new DetalleCompra();
-				detalle.setCantidad(detalleCarritoProducto.getCantidad());
-				detalle.setOrdencompra(odc);
-				detalle.setProducto(detalleCarritoProducto.getProducto());
-				detalle.setTotal(detalleCarritoProducto.getTotal());
-				em.persist(detalle);
+			if (carrito == null){
+				response.sendRedirect("/my-webapp/listaProductos");
+			} else {			
+				List<DetalleCarritoProducto> listaCarrito = carrito.getProductos();
+				
+				Usuario usu1 = new Usuario();
+				usu1.setId(0L);
+				
+				OrdenCompra odc = new OrdenCompra();
+				odc.setCantidad(carrito.getCantProducto());
+				odc.setEstado(new String("P"));
+				odc.setFechaDeCompra(new Date());
+				odc.setTotal(carrito.getTotal());
+				odc.setUsuario(usu1);
+	
+				em.persist(odc);
+				
+				for (DetalleCarritoProducto detalleCarritoProducto : listaCarrito) {
+					DetalleCompra detalle = new DetalleCompra();
+					detalle.setCantidad(detalleCarritoProducto.getCantidad());
+					detalle.setOrdencompra(odc);
+					detalle.setProducto(detalleCarritoProducto.getProducto());
+					detalle.setTotal(detalleCarritoProducto.getTotal());
+					em.persist(detalle);
+				}
+				transaction.commit();
 			}
-			transaction.commit();
 
 		} catch (Exception e) {
 			System.out.println("Error inesperado");
@@ -81,10 +84,12 @@ public class FinalizarCompra extends HttpServlet {
 			emf.close();
 		}
 
-		// Agregar la lista cargada como un atributo
-		RequestDispatcher requestDispatcher = request
-				.getRequestDispatcher(LISTA_ORDEN_JSP);
-		requestDispatcher.forward(request, response);
+		if (!(carrito==null)){
+			// Agregar la lista cargada como un atributo
+			RequestDispatcher requestDispatcher = request
+					.getRequestDispatcher(LISTA_ORDEN_JSP);
+			requestDispatcher.forward(request, response);
+		}
 	}
 
 	/**

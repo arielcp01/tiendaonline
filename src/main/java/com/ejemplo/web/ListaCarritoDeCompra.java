@@ -32,26 +32,39 @@ public class ListaCarritoDeCompra extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// Obtener la lista de productos
-		CarritoDeCompra carrito = new CarritoDeCompra();
-		carrito = (CarritoDeCompra) request.getSession().getAttribute("carrito");
-		List<DetalleCarritoProducto> listaCarrito = carrito.getProductos();
-		BigDecimal total = carrito.getTotal();
-		BigDecimal totalIva = carrito.getTotalIva();
-		BigDecimal granTotal = total.add(totalIva);
+		List<DetalleCarritoProducto> listaCarrito = null;
+		BigDecimal total = new BigDecimal(0);
+		BigDecimal totalIva = new BigDecimal(0);
+		BigDecimal granTotal = new BigDecimal(0);
 		
-		System.out.println("total: " + total);
-		System.out.println("totalIva: " + totalIva);
-		System.out.println("granTotal: " + granTotal);
-		
-		// Agregar la lista cargada como un atributo
-		request.setAttribute("listaCarrito", listaCarrito);
-		request.setAttribute("total", total);
-		request.setAttribute("totalIva", totalIva);
-		request.setAttribute("granTotal", granTotal);
-		
-		RequestDispatcher requestDispatcher = request
-				.getRequestDispatcher(LISTA_PRODUCTOS_JSP);
-		requestDispatcher.forward(request, response);
+		try{
+			CarritoDeCompra carrito = null;
+			carrito = (CarritoDeCompra) request.getSession().getAttribute("carrito");
+			listaCarrito = carrito.getProductos();
+			
+			total = carrito.getTotal();
+			totalIva = carrito.getTotalIva();
+			granTotal = total.add(totalIva);
+			
+			System.out.println("total: " + total);
+			System.out.println("totalIva: " + totalIva);
+			System.out.println("granTotal: " + granTotal);
+			
+			// Agregar la lista cargada como un atributo
+			request.setAttribute("listaCarrito", listaCarrito);
+			request.setAttribute("total", total);
+			request.setAttribute("totalIva", totalIva);
+			request.setAttribute("granTotal", granTotal);
+		}catch(NullPointerException e) {
+			request.setAttribute("listaCarrito", listaCarrito);
+			request.setAttribute("total", total);
+			request.setAttribute("totalIva", totalIva);
+			request.setAttribute("granTotal", granTotal);
+		} finally {
+			RequestDispatcher requestDispatcher = request
+					.getRequestDispatcher(LISTA_PRODUCTOS_JSP);
+			requestDispatcher.forward(request, response);
+		}
 	}
 
 	/**
