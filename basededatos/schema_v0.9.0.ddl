@@ -1,28 +1,3 @@
-CREATE TABLE public.detallecompra
-(
-  id bigint NOT NULL,
-  cantidad bigint,
-  total numeric(19,2),
-  ordencompra_id bigint,
-  producto_id bigint,
-  CONSTRAINT detallecompra_pkey PRIMARY KEY (id)
-)
-
-CREATE TABLE public.ordencompra
-(
-  id bigint NOT NULL,
-  cantidad integer,
-  estado character varying(255),
-  fechadecompra date,
-  total numeric(19,2),
-  usuario_id bigint,
-  tarjeta_id bigint,
-  CONSTRAINT ordencompra_pkey PRIMARY KEY (id),
-  CONSTRAINT fkd56b31486cc4e740 FOREIGN KEY (usuario_id)
-      REFERENCES usuario (id) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION
-)
-
 CREATE TABLE public.productos
 (
   id integer NOT NULL,
@@ -32,7 +7,7 @@ CREATE TABLE public.productos
   observaciones character varying(255),
   precio numeric(19,2),
   CONSTRAINT productos_pkey PRIMARY KEY (id)
-)
+);
 
 CREATE TABLE public.tarjeta
 (
@@ -47,7 +22,7 @@ CREATE TABLE public.tarjeta
   observaciones character varying(255),
   telefono character varying(255),
   CONSTRAINT tarjeta_pkey PRIMARY KEY (id)
-)
+);
 
 CREATE TABLE public.usuario
 (
@@ -57,12 +32,32 @@ CREATE TABLE public.usuario
   nombre character varying(255),
   password character varying(255),
   CONSTRAINT usuario_pkey PRIMARY KEY (id)
-)
+);
 
-alter table public.OrdenCompra 
-	add constraint FKD56B31486CC4E740 
-	foreign key (usuario_id) 
-	references public.Usuario;
+CREATE TABLE public.detallecompra
+(
+  id bigint NOT NULL,
+  cantidad bigint,
+  total numeric(19,2),
+  ordencompra_id bigint,
+  producto_id bigint,
+  CONSTRAINT detallecompra_pkey PRIMARY KEY (id)
+);
+
+CREATE TABLE public.ordencompra
+(
+  id bigint NOT NULL,
+  cantidad integer,
+  estado character varying(255),
+  fechadecompra date,
+  total numeric(19,2),
+  usuario_id bigint,
+  tarjeta_id bigint,
+  CONSTRAINT ordencompra_pkey PRIMARY KEY (id),
+  CONSTRAINT fkd56b31486cc4e740 FOREIGN KEY (usuario_id)
+      REFERENCES usuario (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+);
 
 create sequence public.DetalleCompraSequence;
 
