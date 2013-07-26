@@ -46,16 +46,13 @@ public class ListaCarritoDeCompra extends HttpServlet {
 			totalIva = carrito.getTotalIva();
 			granTotal = total.add(totalIva);
 			
-			System.out.println("total: " + total);
-			System.out.println("totalIva: " + totalIva);
-			System.out.println("granTotal: " + granTotal);
-			
 			// Agregar la lista cargada como un atributo
 			request.setAttribute("listaCarrito", listaCarrito);
 			request.setAttribute("total", total);
 			request.setAttribute("totalIva", totalIva);
 			request.setAttribute("granTotal", granTotal);
 			request.setAttribute("finalizarVisible", finalizarVisible);
+			
 		}catch(NullPointerException e) {
 			request.setAttribute("listaCarrito", listaCarrito);
 			request.setAttribute("total", total);
@@ -63,6 +60,7 @@ public class ListaCarritoDeCompra extends HttpServlet {
 			request.setAttribute("granTotal", granTotal);
 			finalizarVisible = "hidden";
 			request.setAttribute("finalizarVisible", finalizarVisible);
+			
 		} finally {
 			RequestDispatcher requestDispatcher = request
 					.getRequestDispatcher(LISTA_PRODUCTOS_JSP);

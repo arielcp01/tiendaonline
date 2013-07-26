@@ -53,7 +53,7 @@
 		<tr class="blk" align="center">
 			<td><a href="listaProductos"><img src="img/home.png"></a></td>
 			<td><a href="listaProductos"><img src="img/catalogo.png"></a></td>
-			<td><a href="#"><img src="img/carrito.png"></a></td>
+			<td><a href="listaCarrito"><img src="img/carrito.png"></a></td>
 			<td><a href="ordenDeCompra"><img
 					src="img/ordenes_compra.png"></a></td>
 		</tr>

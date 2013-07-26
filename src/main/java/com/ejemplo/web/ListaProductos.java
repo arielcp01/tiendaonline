@@ -43,31 +43,15 @@ public class ListaProductos extends HttpServlet {
 		RequestDispatcher requestDispatcher = request
 				.getRequestDispatcher(LISTA_PRODUCTOS_JSP);
 		requestDispatcher.forward(request, response);
-		// String path = "listaProductos.jsp";
-		/*
-		 * List<Productos> listaProductos = cargarListaProductos();
-		 * 
-		 * request.setAttribute("lista", listaProductos);
-		 * 
-		 * 
-		 * RequestDispatcher requestDispatcher = request
-		 * .getRequestDispatcher(path); requestDispatcher.forward(request,
-		 * response);
-		 */
 
 	}
 
 	private List<Producto> cargarListaProductos() {
-		/*
-		 * ArrayList<Productos> lista = new ArrayList<Productos>(); Productos p1
-		 * = new Productos(); p1.getProducto(); lista.add(p1);
-		 * 
-		 * return lista;
-		 */
 		EntityManager em = PersistenciaCore.getInstance().createEntityManager();
 		Query query = em.createQuery("FROM " + Producto.class.getName());
 		@SuppressWarnings("unchecked")
 		List<Producto> resultList = query.getResultList();
+		em.close();
 		return resultList;
 	}
 
