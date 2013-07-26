@@ -45,13 +45,19 @@ public class ListaProductos extends HttpServlet {
 		requestDispatcher.forward(request, response);
 
 	}
-
+	
+	@SuppressWarnings("unchecked")
 	private List<Producto> cargarListaProductos() {
 		EntityManager em = PersistenciaCore.getInstance().createEntityManager();
-		Query query = em.createQuery("FROM " + Producto.class.getName());
-		@SuppressWarnings("unchecked")
-		List<Producto> resultList = query.getResultList();
-		em.close();
+		List<Producto> resultList = null;
+		try{
+			Query query = em.createQuery("FROM " + Producto.class.getName());
+			resultList = query.getResultList();
+		} finally {
+			if(em != null){
+				em.close();
+			}
+		}
 		return resultList;
 	}
 
