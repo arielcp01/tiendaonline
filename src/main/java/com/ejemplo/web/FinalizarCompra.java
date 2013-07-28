@@ -12,8 +12,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 import com.ejemplo.model.DetalleCompra;
 import com.ejemplo.model.OrdenCompra;
 import com.ejemplo.model.Usuario;
@@ -76,9 +74,6 @@ public class FinalizarCompra extends HttpServlet {
 					em.persist(detalle);
 				}
 				transaction.commit();
-				
-				HttpSession session = request.getSession();
-				session.setAttribute("carrito", null);
 			}
 
 		} catch (Exception e) {
@@ -90,6 +85,9 @@ public class FinalizarCompra extends HttpServlet {
 		}
 
 		if (!(carrito==null)){
+//			HttpSession session = request.getSession();
+//			session.setAttribute("carrito", null);
+			
 			// Agregar la lista cargada como un atributo
 			RequestDispatcher requestDispatcher = request
 					.getRequestDispatcher(LISTA_ORDEN_JSP);

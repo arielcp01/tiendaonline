@@ -16,6 +16,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.codehaus.jackson.map.ObjectMapper;
 import com.ejemplo.model.DetalleCompra;
 import com.ejemplo.model.OrdenCompra;
@@ -46,9 +48,6 @@ public class GrabarCarrito extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// Obtener la lista de productos
-		//response.setContentType("application/json");
-		//PrintWriter out = response.getWriter();
-		// System.out.println("entramos en grabar carrito " );
 		Tarjeta tarjeta = new Tarjeta();
 		String tarjetas = request.getParameter("tarjeta");
 		String digito = request.getParameter("digito");
@@ -81,17 +80,10 @@ public class GrabarCarrito extends HttpServlet {
 			e.printStackTrace();
 		}
 		tarjeta.setFechaDeVencimiento(date);
-		 System.out.println("tarjeta " + tarjetas + " digito " + digito +
-		" pais " + pais + " Fecha " + date.toString());
 		cargarTarjeta(tarjeta);
-		//ObjectMapper mapper = new ObjectMapper();
-		//String json = "true";//mapper.writeValueAsString(tarjeta);
-		//System.out.println("json" + json);
-		//out.println(json);
-		//out.flush();
-		//out.close();
+		HttpSession session = request.getSession();
+		session.setAttribute("carrito", null);
 		response.sendRedirect("/my-webapp/listaProductos");
-
 	}
 
 	private void cargarTarjeta(Tarjeta tarjeta) {
@@ -104,7 +96,6 @@ public class GrabarCarrito extends HttpServlet {
 		transaction.begin();
 		try {
 			String id = Long.toString(tarjeta.getNrotarjeta());
-			System.out.println("Id de Tarjeta " + id);
 			em.persist(tarjeta);
 			transaction.commit();
 		} catch (Exception e) {
@@ -152,15 +143,9 @@ public class GrabarCarrito extends HttpServlet {
 			e.printStackTrace();
 		}
 		tarjeta.setFechaDeVencimiento(date);
-		 System.out.println("tarjeta " + tarjetas + " digito " + digito +
-		" pais " + pais + " Fecha " + date.toString());
 		cargarTarjeta(tarjeta);
-		//ObjectMapper mapper = new ObjectMapper();
-		//String json = "true";//mapper.writeValueAsString(tarjeta);
-		//System.out.println("json" + json);
-		//out.println(json);
-		//out.flush();
-		//out.close();
+		HttpSession session = request.getSession();
+		session.setAttribute("carrito", null);
 		response.sendRedirect("/my-webapp/listaProductos");
 	}
 
