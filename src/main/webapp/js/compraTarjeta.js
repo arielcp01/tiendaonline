@@ -47,8 +47,11 @@ function mascara(d, sep, nums) {
 }
 
 
+
+
+/*
 $(document).ready(function() {
- 
+	 
 	//$("#telefono").mask("(999) 999-999");	
 	// validate signup form on keyup and submit
 	$("#comprarTarjeta").validate({
@@ -101,6 +104,8 @@ $('#result').attr("value",result);
 });
 
 });
+*/
+
 /*
 $("#completar").click(function() {
 

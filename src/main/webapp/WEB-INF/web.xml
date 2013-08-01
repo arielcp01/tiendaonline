@@ -1,28 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
 	version="3.0">
-	<display-name>Archetype Created Web Application</display-name>
+	<display-name>Tienda On line</display-name>
 	<servlet>
 		<servlet-name>ListaProductos</servlet-name>
 		<servlet-class>com.ejemplo.web.ListaProductos</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>DetalleProducto</servlet-name>
+		<servlet-class>com.ejemplo.web.DetalleProducto</servlet-class>
 	</servlet>
 	<servlet>
 		<servlet-name>VerProducto</servlet-name>
 		<servlet-class>com.ejemplo.web.VerProducto</servlet-class>
 	</servlet>
 	<servlet>
+		<servlet-name>CompraTarjeta</servlet-name>
+		<servlet-class>com.ejemplo.web.CompraTarjeta</servlet-class>
+	</servlet>
+	<servlet>
 		<servlet-name>AgregarCarrito</servlet-name>
 		<servlet-class>com.ejemplo.web.AgregarCarrito</servlet-class>
 	</servlet>
 	<servlet>
+		<servlet-name>GrabarCarrito</servlet-name>
+		<servlet-class>com.ejemplo.web.GrabarCarrito</servlet-class>
+	</servlet>
+	<servlet>
 		<servlet-name>OrdenDeCompra</servlet-name>
 		<servlet-class>com.ejemplo.web.OrdenDeCompra</servlet-class>
-	</servlet>	
+	</servlet>
 	<servlet>
-		<servlet-name>DetalleProductos</servlet-name>
-		<servlet-class>com.ejemplo.web.DetalleProducto</servlet-class>
+		<servlet-name>DetalleCompras</servlet-name>
+		<servlet-class>com.ejemplo.web.DetalleCompras</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>ABMUsuario</servlet-name>
+		<servlet-class>com.ejemplo.web.ABMUsuario</servlet-class>
 	</servlet>
 	<servlet>
 		<servlet-name>ListaCarrito</servlet-name>
@@ -37,16 +53,12 @@
 		<servlet-class>com.ejemplo.web.EliminarCarrito</servlet-class>
 	</servlet>
 	<servlet>
-		<servlet-name>ABMUsuario</servlet-name>
-		<servlet-class>com.ejemplo.web.ABMUsuario</servlet-class>
-	</servlet>
-		<servlet>
-		<servlet-name>CompraTarjeta</servlet-name>
-		<servlet-class>com.ejemplo.web.CompraTarjeta</servlet-class>
+		<servlet-name>EliminarCompra</servlet-name>
+		<servlet-class>com.ejemplo.web.EliminarCompra</servlet-class>
 	</servlet>
 	<servlet>
-		<servlet-name>GrabarCarrito</servlet-name>
-		<servlet-class>com.ejemplo.web.GrabarCarrito</servlet-class>
+		<servlet-name>ActualizarCompra</servlet-name>
+		<servlet-class>com.ejemplo.web.ActualizarCompra</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>ListaProductos</servlet-name>
@@ -57,20 +69,37 @@
 		<url-pattern>/verProducto</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
+		<servlet-name>DetalleProducto</servlet-name>
+		<url-pattern>/detalleProducto</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
 		<servlet-name>AgregarCarrito</servlet-name>
 		<url-pattern>/agregarCarrito</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>CompraTarjeta</servlet-name>
+		<url-pattern>/compraTarjeta</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>GrabarCarrito</servlet-name>
+		<url-pattern>/grabarCarrito</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>OrdenDeCompra</servlet-name>
 		<url-pattern>/ordenDeCompra</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
-		<servlet-name>ListaCarrito</servlet-name>
-		<url-pattern>/listaCarrito</url-pattern>
+		<servlet-name>DetalleCompras</servlet-name>
+		<url-pattern>/detalleCompras</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
-		<servlet-name>DetalleProductos</servlet-name>
-		<url-pattern>/detalleProductos</url-pattern>
+		<servlet-name>ABMUsuario</servlet-name>
+		<url-pattern>/abmUsuario</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ListaCarrito</servlet-name>
+		<url-pattern>/listaCarrito</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>FinalizarCompra</servlet-name>
@@ -81,15 +110,12 @@
 		<url-pattern>/eliminarCarrito</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
-		<servlet-name>ABMUsuario</servlet-name>
-		<url-pattern>/abmUsuario</url-pattern>
+		<servlet-name>EliminarCompra</servlet-name>
+		<url-pattern>/eliminarCompra</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
-		<servlet-name>CompraTarjeta</servlet-name>
-		<url-pattern>/compraTarjeta</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>GrabarCarrito</servlet-name>
-		<url-pattern>/grabarCarrito</url-pattern>
+		<servlet-name>ActualizarCompra</servlet-name>
+		<url-pattern>/actualizarCompra</url-pattern>
 	</servlet-mapping>
 </web-app>
+

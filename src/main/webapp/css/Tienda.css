@@ -1,0 +1,32 @@
+body
+{
+background-color:#d0e4fe;
+font: normal 12px/18px 'Helvetica', Arial, sans-serif;
+position: absolute;
+width: 100%;
+margin-top: 0;
+margin-bottom: auto;
+margin-left: auto;
+margin-right: auto;
+}
+h1
+{
+color:orange;
+text-align:center;
+}
+
+p
+{
+align:center;
+font: normal 12px/18px 'Helvetica', Arial, sans-serif;
+position: absolute;
+width: 100%;
+}
+#content {
+	background: rgb(255, 255, 255);
+	padding-top: 50px;
+	padding-left: 100px;
+	padding-right: 100px;
+	padding-bottom: 50px;
+	left: 40 px;
+}

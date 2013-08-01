@@ -26,7 +26,7 @@ public class CompraTarjeta extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		int cant = 0;
+		long cant = 0;
 		int total = 0;
 		HttpSession session = request.getSession();
 
@@ -34,12 +34,20 @@ public class CompraTarjeta extends HttpServlet {
 				.getAttribute("carrito");
 
 		if (carrito == null) {
-			response.sendRedirect("/my-webapp/listaProductos");
+			// System.out.println("Error no tiene cargado nada Aún ");
+			// response.sendError(500, "Falta Cantidad de Producto");
+			RequestDispatcher requestDispatcher = request
+					.getRequestDispatcher("/listaProductos");
+			requestDispatcher.forward(request, response);
+
 		} else {
+			String IdStr = request.getParameter("id");
 			total = carrito.getCantTotal();
+			System.out.println("Id Orden de Compra " +IdStr);
 			cant = carrito.getCantProducto();
 			request.setAttribute("cantidad", cant);
 			request.setAttribute("total", total);
+			request.setAttribute("id",IdStr);
 			RequestDispatcher requestDispatcher = request
 					.getRequestDispatcher("comprarTarjeta.jsp");
 			requestDispatcher.forward(request, response);

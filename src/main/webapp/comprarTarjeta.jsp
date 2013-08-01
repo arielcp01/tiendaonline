@@ -8,12 +8,59 @@
 <script src="./js/jquery.js"></script>
 <script src="./js/jquery.validate.js"></script>
 <script src="./js/jquery-1.5.1.js"></script>
+<script src="./js/jquery-1.6.4.js" type="text/javascript"></script>
 <script src="./js/jquery.ui.core.js"></script>
 <script src="./js/jquery.ui.widget.js"></script>
-
-
 <script type="text/javascript" src="./js/compraTarjeta.js">
-	
+</script>
+<script>
+	$(document).ready(function() {
+
+		$("#comprarTarjeta").validate({
+			rules : {
+				tarjeta : "required",
+				marca : "required",
+				nombre : "required",
+				ciudad : "required",
+				telefono : "required",
+				fecha : "requiered",
+				digito : {
+					required : true,
+					minlength : 1,
+					maxlength : 4
+				},
+
+			},
+			messages : {
+				tarjeta : "Ingrese Tarjeta",
+				marca : "Ingrese Marca",
+				calle : "Ingrese su Direcion",
+				ciudad : "Ingrese la Ciudad",
+				fecha : "Ingrese Fecha",
+				digito : {
+					required : "Por favor ingrese el digito verificador",
+					minlength : "Debe 4 contener digitos",
+					maxlength : "Debe al menos un digitos"
+				},
+
+			}
+		});
+		var form = $('#comprarTarjeta');
+		form.submit(function() {
+
+			$.ajax({
+				type : form.attr('method'),
+				url : form.attr('action'),
+				data : form.serialize(),
+				success : function(data) {
+					var result = data;
+					$('#result').attr("value", result);
+
+				}
+			});
+		});
+
+	});
 </script>
 
 <link rel="stylesheet" type="text/css" href="css/common.css" />
@@ -61,7 +108,8 @@ fieldset fieldset label {
 </head>
 <body>
 
-	<form id="comprarTarjeta" name="comprarTarjeta" method="post" action="grabarCarrito" > 
+	<form id="comprarTarjeta" name="comprarTarjeta" method="post"
+		action="grabarCarrito?id=${id}" >
 		<table id="top" width="500" align="center">
 			<tr class="blk">
 				<td colspan="4" align="center">
@@ -84,6 +132,7 @@ fieldset fieldset label {
 					<legend class="ui-widget ui-widget-header ui-corner-all">Datos
 						de la Tarjeta</legend>
 					<table border="0">
+
 						<td>Numero de Tarjeta:</td>
 						<td><input id="tarjeta" name="tarjeta" required
 							maxlength="16" /></td>
@@ -92,6 +141,8 @@ fieldset fieldset label {
 						<td><c:out value="${total}" /></td>
 						<tr>
 						<tr>
+							<td>Orden Compra:</td>
+							<td><c:out value="${id}" /></td>
 							<td>Marca:</td>
 							<td><select name="marca" id="marca" requierd>
 									<option>Visa</option>
@@ -151,9 +202,9 @@ fieldset fieldset label {
 
 					</table>
 
-				</fieldset> <input type="submit" id="completar" name="completar" value="Completar Compra" /> 
-				<td>Result</td><td><input type="text" value="" id="result"/></td>
-				<a href="listaProductos">Modificar Carrito</a>
+				</fieldset> <input type="submit" id="completar" name="completar"
+				value="Completar Compra" /> <a href="listaProductos">Modificar
+					Carrito</a>
 			</td>
 			<tr class="blk" align="center">
 				<td colspan="4">Copyright © tiendaonline.com</td>

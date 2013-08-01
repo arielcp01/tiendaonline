@@ -87,8 +87,22 @@ public class Usuario implements Serializable {
 		return ordenesDeCompras;
 	}
 
-	public void setOrdenesDeCompras(List<OrdenCompra> ordenesDeCompras) {
-		this.ordenesDeCompras = ordenesDeCompras;
+	public void setOrdencompras(List<Ordencompra> ordencompras) {
+		this.ordencompras = ordencompras;
+	}
+
+	public Ordencompra addOrdencompra(Ordencompra ordencompra) {
+		getOrdencompras().add(ordencompra);
+		ordencompra.setUsuario(this);
+
+		return ordencompra;
+	}
+
+	public Ordencompra removeOrdencompra(Ordencompra ordencompra) {
+		getOrdencompras().remove(ordencompra);
+		ordencompra.setUsuario(null);
+
+		return ordencompra;
 	}
 
 }

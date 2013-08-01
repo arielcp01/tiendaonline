@@ -1,18 +1,14 @@
 package com.ejemplo.model;
 
 import java.io.Serializable;
+import javax.persistence.*;
+
+import org.hibernate.annotations.OnDelete;
+
 import java.math.BigDecimal;
 import java.util.Date;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import java.util.List;
+
 
 /**
  * The persistent class for the ordencompra database table.
@@ -20,8 +16,9 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "ordencompra")
-@NamedQuery(name = "Ordencompra.findAll", query = "SELECT o FROM OrdenCompra o")
-public class OrdenCompra implements Serializable {
+@NamedQuery(name = "Ordencompra.findAll", query = "SELECT o FROM Ordencompra o")
+
+public class Ordencompra implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -34,13 +31,15 @@ public class OrdenCompra implements Serializable {
 	private String estado;
 
 	@Temporal(TemporalType.DATE)
-	private Date fechaDeCompra;
+	private Date fechadecompra;
 
 	private BigDecimal total;
 
-	// bi-directional many-to-one association to Detallecompra
-	
-	// bi-directional many-to-one association to Tarjeta
+	//bi-directional many-to-one association to Detallecompra
+	@OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.REMOVE },mappedBy="ordencompra")
+	private List<Detallecompra> detallecompras;
+
+	//bi-directional many-to-one association to Tarjeta
 	@ManyToOne
 	private Tarjeta tarjeta;
 	
@@ -52,10 +51,10 @@ public class OrdenCompra implements Serializable {
 		this.tarjeta = tarjeta;
 	}
 
-	// bi-directional many-to-one association to Usuario
+	//bi-directional many-to-one association to Usuario
 	@ManyToOne
 	private Usuario usuario;
-
+	
 	public Usuario getUsuario() {
 		return usuario;
 	}
@@ -64,11 +63,11 @@ public class OrdenCompra implements Serializable {
 		this.usuario = usuario;
 	}
 
-	public OrdenCompra() {
+	public Ordencompra() {
 	}
 
 	public Long getId() {
-		return id;
+		return this.id;
 	}
 
 	public void setId(Long id) {
@@ -76,7 +75,7 @@ public class OrdenCompra implements Serializable {
 	}
 
 	public Integer getCantidad() {
-		return cantidad;
+		return this.cantidad;
 	}
 
 	public void setCantidad(Integer cantidad) {
@@ -84,42 +83,65 @@ public class OrdenCompra implements Serializable {
 	}
 
 	public String getEstado() {
-		return estado;
+		return this.estado;
 	}
 
 	public void setEstado(String estado) {
 		this.estado = estado;
 	}
 
-	public Date getFechaDeCompra() {
-		return fechaDeCompra;
+	public Date getFechadecompra() {
+		return this.fechadecompra;
 	}
 
-	public void setFechaDeCompra(Date fechaDeCompra) {
-		this.fechaDeCompra = fechaDeCompra;
+	public void setFechadecompra(Date fechadecompra) {
+		this.fechadecompra = fechadecompra;
 	}
 
 	public BigDecimal getTotal() {
-		return total;
+		return this.total;
 	}
 
 	public void setTotal(BigDecimal total) {
 		this.total = total;
 	}
 
-	//
-	// public Detallecompra addDetallecompra(Detallecompra detallecompra) {
-	// getDetallecompras().add(detallecompra);
-	// detallecompra.setOrdencompra(this);
-	//
-	// return detallecompra;
-	// }
-	//
-	// public Detallecompra removeDetallecompra(Detallecompra detallecompra) {
-	// getDetallecompras().remove(detallecompra);
-	// detallecompra.setOrdencompra(null);
-	//
-	// return detallecompra;
-	// }
+	public List<Detallecompra> getDetallecompras() {
+		return this.detallecompras;
+	}
+
+	public void setDetallecompras(List<Detallecompra> detallecompras) {
+		this.detallecompras = detallecompras;
+	}
+
+	public Detallecompra addDetallecompra(Detallecompra detallecompra) {
+		getDetallecompras().add(detallecompra);
+		detallecompra.setOrdencompra(this);
+
+		return detallecompra;
+	}
+
+	public Detallecompra removeDetallecompra(Detallecompra detallecompra) {
+		getDetallecompras().remove(detallecompra);
+		detallecompra.setOrdencompra(null);
+
+		return detallecompra;
+	}
+
+	public Tarjeta getTarjeta() {
+		return this.tarjeta;
+	}
+
+	public void setTarjeta(Tarjeta tarjeta) {
+		this.tarjeta = tarjeta;
+	}
+
+	public Usuario getUsuario() {
+		return this.usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
 
 }

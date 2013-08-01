@@ -3,6 +3,7 @@ package com.ejemplo.web;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -12,8 +13,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import com.ejemplo.model.DetalleCompra;
-import com.ejemplo.model.OrdenCompra;
+import javax.servlet.http.HttpSession;
+
+import com.ejemplo.model.Detallecompra;
+import com.ejemplo.model.Ordencompra;
 import com.ejemplo.model.Usuario;
 import com.ejemplo.utils.CarritoDeCompra;
 import com.ejemplo.utils.DetalleCarritoProducto;
@@ -23,8 +26,10 @@ import com.ejemplo.utils.DetalleCarritoProducto;
  */
 
 public class FinalizarCompra extends HttpServlet {
-	private static final String LISTA_ORDEN_JSP = "compraTarjeta";
+	
+	
 	private static final long serialVersionUID = 1L;
+	private String JSP;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -34,19 +39,34 @@ public class FinalizarCompra extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
+	
+
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String persistenceUnitName = "my-webapp";
+		String persistenceUnitName = "web-app";
 		EntityManagerFactory emf = Persistence
 				.createEntityManagerFactory(persistenceUnitName);
-		EntityManager em = emf.createEntityManager();
+		HttpSession session = request.getSession();
 
+		CarritoDeCompra carrito = (CarritoDeCompra) session
+				.getAttribute("carrito");
+		if (carrito == null) {
+			// System.out.println("Error no tiene cargado nada Aún ");
+			// response.sendError(500, "Falta Cantidad de Producto");
+			RequestDispatcher requestDispatcher = request
+					.getRequestDispatcher("/listaProductos");
+			requestDispatcher.forward(request, response);
+
+		} 
+		EntityManager em = emf.createEntityManager();
+		//HttpSession session = request.getSession();
 		EntityTransaction transaction = em.getTransaction();
 		transaction.begin();
 		CarritoDeCompra carrito = new CarritoDeCompra();
 		try {
+			//CarritoDeCompra carrito = new CarritoDeCompra();
 			carrito = (CarritoDeCompra) request.getSession().getAttribute("carrito");
 			if (carrito == null){
 				response.sendRedirect("/my-webapp/listaProductos");
@@ -75,7 +95,13 @@ public class FinalizarCompra extends HttpServlet {
 				}
 				transaction.commit();
 			}
-
+			Long id=odc.getId();
+			String idstr = id.toString();
+			//System.out.println("Clave Generada " + idstr);
+			request.setAttribute("id", idstr);	
+			String LISTA_ORDEN_JSP = "compraTarjeta?id=" + idstr ;
+			setJSP(LISTA_ORDEN_JSP);
+		   
 		} catch (Exception e) {
 			System.out.println("Error inesperado");
 			e.printStackTrace();
@@ -83,7 +109,7 @@ public class FinalizarCompra extends HttpServlet {
 			em.close();
 			emf.close();
 		}
-
+		
 		if (!(carrito==null)){
 //			HttpSession session = request.getSession();
 //			session.setAttribute("carrito", null);
@@ -93,7 +119,10 @@ public class FinalizarCompra extends HttpServlet {
 					.getRequestDispatcher(LISTA_ORDEN_JSP);
 			requestDispatcher.forward(request, response);
 		}
+		
 	}
+
+
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

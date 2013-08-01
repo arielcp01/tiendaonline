@@ -17,10 +17,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import org.codehaus.jackson.map.ObjectMapper;
-import com.ejemplo.model.DetalleCompra;
-import com.ejemplo.model.OrdenCompra;
+import org.hibernate.ejb.criteria.ValueHandlerFactory.BigDecimalValueHandler;
+
+import com.ejemplo.model.Detallecompra;
+import com.ejemplo.model.Ordencompra;
 import com.ejemplo.model.Producto;
 import com.ejemplo.model.Tarjeta;
 import com.ejemplo.persistencia.*;
@@ -48,20 +49,31 @@ public class GrabarCarrito extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// Obtener la lista de productos
+		//response.setContentType("application/json");
+		//PrintWriter out = response.getWriter();
+		// System.out.println("entramos en grabar carrito " );
 		Tarjeta tarjeta = new Tarjeta();
+		String IdStr = request.getParameter("id");
+		Long idCompras = Long.parseLong(IdStr);
+		//System.out.println("orden de compras" + idCompras);
 		String tarjetas = request.getParameter("tarjeta");
-		String digito = request.getParameter("digito");
+		String pais = request.getParameter("pais");
+		String ciudad = request.getParameter("ciudad");
+		String observacion = request.getParameter("observacion");
+		String StrDig	= request.getParameter("digito");
+		// System.out.println("tarjeta " + tarjetas + " digito " + StrDig +
+		//			" pais " + pais );
+		Integer digito =   Integer.getInteger(StrDig);
 		String fecha = request.getParameter("fecha");
 		String calle = request.getParameter("calle");
 		String marca = request.getParameter("marca");
 		String telefono = request.getParameter("telefono");
-		String pais = request.getParameter("pais");
-		String ciudad = request.getParameter("ciudad");
-		String observacion = request.getParameter("observacion");
+		
 		String nombre = request.getParameter("nombre");
+		
 		Long nroTrajeta = Long.parseLong(tarjetas);
 		tarjeta.setNrotarjeta(nroTrajeta);
-		tarjeta.setDigitoVerificador(Integer.parseInt(digito));
+		tarjeta.setDigitoverificador(digito);
 		tarjeta.setDireccion(calle);
 		tarjeta.setMarca(marca);
 		tarjeta.setTelefono(telefono);
@@ -79,25 +91,46 @@ public class GrabarCarrito extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		tarjeta.setFechaDeVencimiento(date);
-		cargarTarjeta(tarjeta);
+		tarjeta.setFechadevencimiento(date);
+		System.out.println(" Fecha " + date.toString());
+		cargarTarjeta(tarjeta,idCompras);
+		//ObjectMapper mapper = new ObjectMapper();
+		//String json = "true";//mapper.writeValueAsString(tarjeta);
+		//System.out.println("json" + json);
+		//out.println(json);
+		//out.flush();
+		//out.close();
 		HttpSession session = request.getSession();
-		session.setAttribute("carrito", null);
-		response.sendRedirect("/my-webapp/listaProductos");
+		session.removeAttribute("carrito");
+		response.sendRedirect("/web-app/listaProductos");
+
 	}
 
-	private void cargarTarjeta(Tarjeta tarjeta) {
-		String persistenceUnitName = "my-webapp";
+	private void cargarTarjeta(Tarjeta tarjeta,Long idCompras) {
+		String persistenceUnitName = "web-app";
 		EntityManagerFactory emf = Persistence
 				.createEntityManagerFactory(persistenceUnitName);
 		EntityManager em = emf.createEntityManager();
-
+		//Detallecompra dc = new Detallecompra();
+		//Ordencompra odc = new Ordencompra();
 		EntityTransaction transaction = em.getTransaction();
 		transaction.begin();
 		try {
 			String id = Long.toString(tarjeta.getNrotarjeta());
+			//System.out.println("Id de Tarjeta " + id);
 			em.persist(tarjeta);
 			transaction.commit();
+			Long idTAR = tarjeta.getId();
+			//System.out.println("Id de Tarjeta " + idTAR);
+			
+			em.getTransaction().begin();
+			Ordencompra orden = em.find(Ordencompra.class,idCompras);
+			orden.setTarjeta(tarjeta);
+			//dc.setOrdencompra(odc);
+			em.merge(orden);
+			em.getTransaction().commit();
+		
+			
 		} catch (Exception e) {
 			System.out.println("Error al intentar grabar los datos ");
 		} finally {
@@ -110,10 +143,10 @@ public class GrabarCarrito extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		//response.setContentType("application/json");
 		//PrintWriter out = response.getWriter();
-		
+		Long idCompras = Long.parseLong(request.getParameter("id"));
 		Tarjeta tarjeta = new Tarjeta();
 		String tarjetas = request.getParameter("tarjeta");
-		String digito = request.getParameter("digito");
+		Integer digito =   Integer.getInteger(request.getParameter("digito"));
 		String fecha = request.getParameter("fecha");
 		String calle = request.getParameter("calle");
 		String marca = request.getParameter("marca");
@@ -124,7 +157,7 @@ public class GrabarCarrito extends HttpServlet {
 		String nombre = request.getParameter("nombre");
 		Long nroTrajeta = Long.parseLong(tarjetas);
 		tarjeta.setNrotarjeta(nroTrajeta);
-		tarjeta.setDigitoVerificador(Integer.parseInt(digito));
+		tarjeta.setDigitoverificador(digito);
 		tarjeta.setDireccion(calle);
 		tarjeta.setMarca(marca);
 		tarjeta.setTelefono(telefono);
@@ -142,11 +175,17 @@ public class GrabarCarrito extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		tarjeta.setFechaDeVencimiento(date);
-		cargarTarjeta(tarjeta);
-		HttpSession session = request.getSession();
-		session.setAttribute("carrito", null);
-		response.sendRedirect("/my-webapp/listaProductos");
+		tarjeta.setFechadevencimiento(date);
+		// System.out.println("tarjeta " + tarjetas + " digito " + digito +
+		//" pais " + pais + " Fecha " + date.toString());
+		cargarTarjeta(tarjeta, idCompras);
+		//ObjectMapper mapper = new ObjectMapper();
+		//String json = "true";//mapper.writeValueAsString(tarjeta);
+		//System.out.println("json" + json);
+		//out.println(json);
+		//out.flush();
+		//out.close();
+		response.sendRedirect("/web-app/listaProductos");
 	}
 
 }
