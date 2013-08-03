@@ -70,7 +70,7 @@
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>DetalleProducto</servlet-name>
-		<url-pattern>/detalleProducto</url-pattern>
+		<url-pattern>/detalleProductos</url-pattern>
 	</servlet-mapping>
 
 	<servlet-mapping>

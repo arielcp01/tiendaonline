@@ -3,7 +3,6 @@ package com.ejemplo.web;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -14,9 +13,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import com.ejemplo.model.Detallecompra;
-import com.ejemplo.model.Ordencompra;
+import com.ejemplo.model.DetalleCompra;
+import com.ejemplo.model.OrdenCompra;
+import com.ejemplo.model.Producto;
 import com.ejemplo.model.Usuario;
 import com.ejemplo.utils.CarritoDeCompra;
 import com.ejemplo.utils.DetalleCarritoProducto;
@@ -27,9 +26,8 @@ import com.ejemplo.utils.DetalleCarritoProducto;
 
 public class FinalizarCompra extends HttpServlet {
 	
-	
 	private static final long serialVersionUID = 1L;
-	private String JSP;
+	private String LISTA_ORDEN_JSP;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -40,12 +38,11 @@ public class FinalizarCompra extends HttpServlet {
     }
 
 	
-
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String persistenceUnitName = "web-app";
+		String persistenceUnitName = "my-webapp";
 		EntityManagerFactory emf = Persistence
 				.createEntityManagerFactory(persistenceUnitName);
 		HttpSession session = request.getSession();
@@ -53,18 +50,18 @@ public class FinalizarCompra extends HttpServlet {
 		CarritoDeCompra carrito = (CarritoDeCompra) session
 				.getAttribute("carrito");
 		if (carrito == null) {
-			// System.out.println("Error no tiene cargado nada Aún ");
+			// System.out.println("Error no tiene cargado nada Aï¿½n ");
 			// response.sendError(500, "Falta Cantidad de Producto");
 			RequestDispatcher requestDispatcher = request
 					.getRequestDispatcher("/listaProductos");
 			requestDispatcher.forward(request, response);
-
 		} 
 		EntityManager em = emf.createEntityManager();
 		//HttpSession session = request.getSession();
 		EntityTransaction transaction = em.getTransaction();
 		transaction.begin();
-		CarritoDeCompra carrito = new CarritoDeCompra();
+		
+		OrdenCompra odc = new OrdenCompra();
 		try {
 			//CarritoDeCompra carrito = new CarritoDeCompra();
 			carrito = (CarritoDeCompra) request.getSession().getAttribute("carrito");
@@ -75,8 +72,6 @@ public class FinalizarCompra extends HttpServlet {
 				
 				Usuario usu1 = new Usuario();
 				usu1.setId(0L);
-				
-				OrdenCompra odc = new OrdenCompra();
 				odc.setCantidad(carrito.getCantProducto());
 				odc.setEstado(new String("P"));
 				odc.setFechaDeCompra(new Date());
@@ -92,15 +87,20 @@ public class FinalizarCompra extends HttpServlet {
 					detalle.setProducto(detalleCarritoProducto.getProducto());
 					detalle.setTotal(detalleCarritoProducto.getTotal());
 					em.persist(detalle);
+					
+					Producto prd = em.find(Producto.class,detalleCarritoProducto.getProducto().getId());
+					prd.setRestarCantidad(detalleCarritoProducto.getCantidad());
+					em.merge(prd);
+					//em.getTransaction().commit();
 				}
 				transaction.commit();
 			}
-			Long id=odc.getId();
+			Long id = odc.getId();
 			String idstr = id.toString();
 			//System.out.println("Clave Generada " + idstr);
 			request.setAttribute("id", idstr);	
-			String LISTA_ORDEN_JSP = "compraTarjeta?id=" + idstr ;
-			setJSP(LISTA_ORDEN_JSP);
+			LISTA_ORDEN_JSP = "compraTarjeta?id=" + idstr ;
+			//setJSP(LISTA_ORDEN_JSP);
 		   
 		} catch (Exception e) {
 			System.out.println("Error inesperado");
@@ -110,10 +110,7 @@ public class FinalizarCompra extends HttpServlet {
 			emf.close();
 		}
 		
-		if (!(carrito==null)){
-//			HttpSession session = request.getSession();
-//			session.setAttribute("carrito", null);
-			
+		if (!(carrito==null)){	
 			// Agregar la lista cargada como un atributo
 			RequestDispatcher requestDispatcher = request
 					.getRequestDispatcher(LISTA_ORDEN_JSP);

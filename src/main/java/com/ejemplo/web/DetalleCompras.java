@@ -3,18 +3,15 @@ package com.ejemplo.web;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-
 import javax.persistence.*;
 import javax.servlet.*;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import net.sf.json.*;
 import com.ejemplo.model.*;
 import com.ejemplo.persistencia.PersistenciaCore;
+import net.sf.json.*;
 
 /**
  * Servlet implementation class OrdenDeCompra
@@ -50,7 +47,7 @@ public class DetalleCompras extends HttpServlet {
 		}
 		Long id = Long.parseLong(idStr);
 		// System.out.println("id " + id );
-		List<Detallecompra> listaDetalle = (List<Detallecompra>) compras(id);
+		List<DetalleCompra> listaDetalle = (List<DetalleCompra>) compras(id);
 		// DetalleCompra detalle=null;
 		// Detallecompra listaDetalle = cargarDetalle(id);
 
@@ -59,8 +56,8 @@ public class DetalleCompras extends HttpServlet {
 		List<JSONObject> jsonCategories = new ArrayList<JSONObject>();
 
 		for (int i = 0; i < listaDetalle.size(); i++) {
-			Detallecompra detalle = listaDetalle.get(i);
-			Integer productoId = detalle.getProductoId();
+			DetalleCompra detalle = listaDetalle.get(i);
+			Long productoId = detalle.getProductoId();
 			EntityManager em = PersistenciaCore.getInstance()
 					.createEntityManager();
 			Producto producto = em.find(Producto.class, productoId);
@@ -73,23 +70,10 @@ public class DetalleCompras extends HttpServlet {
 			jsonCategories.add(json);
 		
 		}
-		/*
-		 * for (Iterator iterator = jsonCategories.iterator();
-		 * iterator.hasNext();) { JSONObject jsonObject = (JSONObject)
-		 * iterator.next(); System.out.println("Producto id de compra " +
-		 * jsonObject.optString("producto_id"));
-		 * 
-		 * }
-		 */
-		// response.setContentType("text/xml");
-		// response.setHeader("Cache-Control", "no-cache");
-		out.write(jsonCategories.toString());
 
+		out.write(jsonCategories.toString());
 		out.flush();
 		out.close();
-
-		
-
 	}
 
 	/**
@@ -105,24 +89,10 @@ public class DetalleCompras extends HttpServlet {
 		requestDispatcher.forward(request, response);
 	}
 
-	private Detallecompra cargarDetalle(Long id) {
-		Detallecompra detallecompra = null;
-		if (id == null) {
-			System.out.println("Error id nulo");
-		} else {
-			EntityManager em = PersistenciaCore.getInstance()
-					.createEntityManager();
-			detallecompra = em.find(Detallecompra.class, id);
-			em.close();
-
-		}
-		return detallecompra;
-	}
-
-	private List<Detallecompra> compras(Long id) {
+	private List<DetalleCompra> compras(Long id) {
 		EntityManager em = PersistenciaCore.getInstance().createEntityManager();
-		Ordencompra orden = em.find(Ordencompra.class, id);
-		List<Detallecompra> detallecompras = orden.getDetallecompras();
+		OrdenCompra orden = em.find(OrdenCompra.class, id);
+		List<DetalleCompra> detallecompras = orden.getDetallecompras();
 		return detallecompras;
 	}
 

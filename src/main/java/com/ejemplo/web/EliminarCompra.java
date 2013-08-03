@@ -2,7 +2,6 @@ package com.ejemplo.web;
 
 import java.io.IOException;
 import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -12,12 +11,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import net.sf.json.JSONObject;
-
-import com.ejemplo.model.Detallecompra;
-import com.ejemplo.model.Ordencompra;
-import com.ejemplo.model.Producto;
+import com.ejemplo.model.DetalleCompra;
+import com.ejemplo.model.OrdenCompra;
 import com.ejemplo.persistencia.PersistenciaCore;
 
 /**
@@ -55,25 +50,19 @@ public class EliminarCompra extends HttpServlet {
 		
 		EntityManager em = emf.createEntityManager();
 		EntityTransaction transaction = em.getTransaction();
-		Ordencompra orden = em.find(Ordencompra.class,id);
-		List<Detallecompra> listaDetalle = (List<Detallecompra>) compras(id);
+		OrdenCompra orden = em.find(OrdenCompra.class,id);
+		List<DetalleCompra> listaDetalle = (List<DetalleCompra>) compras(id);
 		//ListDetallecompra detallecompras =  orden.getDetallecompras();
 
 		transaction.begin();
 
 		try {
-			
-			
 			for (int i = 0; i < listaDetalle.size(); i++) {
-				
-			     Detallecompra detalle = listaDetalle.get(i);
+			     DetalleCompra detalle = listaDetalle.get(i);
 			     orden.removeDetallecompra(detalle);
 			   	}
 			em.remove(orden);
-			
 			transaction.commit();
-			
-
 		} catch (Exception e) {
 			System.out.println("Error inesperado");
 			e.printStackTrace();
@@ -92,10 +81,10 @@ public class EliminarCompra extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	}
-	private List<Detallecompra> compras (Long id) {
+	private List<DetalleCompra> compras (Long id) {
 		EntityManager em = PersistenciaCore.getInstance().createEntityManager();
-		Ordencompra orden = em.find(Ordencompra.class,id);
-		 List<Detallecompra> detallecompras =  orden.getDetallecompras();
+		OrdenCompra orden = em.find(OrdenCompra.class,id);
+		 List<DetalleCompra> detallecompras =  orden.getDetallecompras();
 		return detallecompras;
 	}
 }

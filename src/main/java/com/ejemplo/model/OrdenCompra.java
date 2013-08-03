@@ -2,9 +2,6 @@ package com.ejemplo.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
-
-import org.hibernate.annotations.OnDelete;
-
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -16,9 +13,9 @@ import java.util.List;
  */
 @Entity
 @Table(name = "ordencompra")
-@NamedQuery(name = "Ordencompra.findAll", query = "SELECT o FROM Ordencompra o")
+@NamedQuery(name = "Ordencompra.findAll", query = "SELECT o FROM OrdenCompra o")
 
-public class Ordencompra implements Serializable {
+public class OrdenCompra implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -37,34 +34,15 @@ public class Ordencompra implements Serializable {
 
 	//bi-directional many-to-one association to Detallecompra
 	@OneToMany(fetch = FetchType.LAZY, cascade = { CascadeType.REMOVE },mappedBy="ordencompra")
-	private List<Detallecompra> detallecompras;
+	private List<DetalleCompra> detallecompras;
 
 	//bi-directional many-to-one association to Tarjeta
 	@ManyToOne
 	private Tarjeta tarjeta;
-	
-	public Tarjeta getTarjeta() {
-		return tarjeta;
-	}
-
-	public void setTarjeta(Tarjeta tarjeta) {
-		this.tarjeta = tarjeta;
-	}
 
 	//bi-directional many-to-one association to Usuario
 	@ManyToOne
 	private Usuario usuario;
-	
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
-
-	public Ordencompra() {
-	}
 
 	public Long getId() {
 		return this.id;
@@ -90,11 +68,11 @@ public class Ordencompra implements Serializable {
 		this.estado = estado;
 	}
 
-	public Date getFechadecompra() {
+	public Date getFechaDeCompra() {
 		return this.fechadecompra;
 	}
 
-	public void setFechadecompra(Date fechadecompra) {
+	public void setFechaDeCompra(Date fechadecompra) {
 		this.fechadecompra = fechadecompra;
 	}
 
@@ -106,22 +84,22 @@ public class Ordencompra implements Serializable {
 		this.total = total;
 	}
 
-	public List<Detallecompra> getDetallecompras() {
+	public List<DetalleCompra> getDetallecompras() {
 		return this.detallecompras;
 	}
 
-	public void setDetallecompras(List<Detallecompra> detallecompras) {
+	public void setDetallecompras(List<DetalleCompra> detallecompras) {
 		this.detallecompras = detallecompras;
 	}
 
-	public Detallecompra addDetallecompra(Detallecompra detallecompra) {
+	public DetalleCompra addDetallecompra(DetalleCompra detallecompra) {
 		getDetallecompras().add(detallecompra);
 		detallecompra.setOrdencompra(this);
 
 		return detallecompra;
 	}
 
-	public Detallecompra removeDetallecompra(Detallecompra detallecompra) {
+	public DetalleCompra removeDetallecompra(DetalleCompra detallecompra) {
 		getDetallecompras().remove(detallecompra);
 		detallecompra.setOrdencompra(null);
 

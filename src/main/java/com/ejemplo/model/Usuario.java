@@ -1,9 +1,7 @@
 package com.ejemplo.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -36,9 +34,9 @@ public class Usuario implements Serializable {
 
 	private String password;
 
-	// //bi-directional many-to-one association to Ordencompra
-	@OneToMany(mappedBy = "usuario")
-	private List<OrdenCompra> ordenesDeCompras = new ArrayList<OrdenCompra>();
+	//bi-directional many-to-one association to OrdenCompra
+	@OneToMany(mappedBy="usuario")
+	private List<OrdenCompra> ordencompras;
 
 	public Usuario() {
 	}
@@ -84,22 +82,22 @@ public class Usuario implements Serializable {
 	}
 
 	public List<OrdenCompra> getOrdenesDeCompras() {
-		return ordenesDeCompras;
+		return ordencompras;
 	}
 
-	public void setOrdencompras(List<Ordencompra> ordencompras) {
+	public void setOrdencompras(List<OrdenCompra> ordencompras) {
 		this.ordencompras = ordencompras;
 	}
 
-	public Ordencompra addOrdencompra(Ordencompra ordencompra) {
-		getOrdencompras().add(ordencompra);
+	public OrdenCompra addOrdencompra(OrdenCompra ordencompra) {
+		getOrdenesDeCompras().add(ordencompra);
 		ordencompra.setUsuario(this);
 
 		return ordencompra;
 	}
 
-	public Ordencompra removeOrdencompra(Ordencompra ordencompra) {
-		getOrdencompras().remove(ordencompra);
+	public OrdenCompra removeOrdencompra(OrdenCompra ordencompra) {
+		getOrdenesDeCompras().remove(ordencompra);
 		ordencompra.setUsuario(null);
 
 		return ordencompra;

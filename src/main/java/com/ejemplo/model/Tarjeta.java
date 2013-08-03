@@ -2,8 +2,6 @@ package com.ejemplo.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
-
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -44,7 +42,7 @@ public class Tarjeta implements Serializable {
 
 	//bi-directional many-to-one association to Ordencompra
 	@OneToMany(mappedBy="tarjeta")
-	private List<Ordencompra> ordencompras;
+	private List<OrdenCompra> ordencompras;
 
 	public Tarjeta() {
 	}
@@ -129,22 +127,22 @@ public class Tarjeta implements Serializable {
 		this.telefono = telefono;
 	}
 
-	public List<Ordencompra> getOrdencompras() {
+	public List<OrdenCompra> getOrdencompras() {
 		return this.ordencompras;
 	}
 
-	public void setOrdencompras(List<Ordencompra> ordencompras) {
+	public void setOrdencompras(List<OrdenCompra> ordencompras) {
 		this.ordencompras = ordencompras;
 	}
 
-	public Ordencompra addOrdencompra(Ordencompra ordencompra) {
+	public OrdenCompra addOrdencompra(OrdenCompra ordencompra) {
 		getOrdencompras().add(ordencompra);
 		ordencompra.setTarjeta(this);
 
 		return ordencompra;
 	}
 
-	public Ordencompra removeOrdencompra(Ordencompra ordencompra) {
+	public OrdenCompra removeOrdencompra(OrdenCompra ordencompra) {
 		getOrdencompras().remove(ordencompra);
 		ordencompra.setTarjeta(null);
 

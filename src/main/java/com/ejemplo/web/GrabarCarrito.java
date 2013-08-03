@@ -19,9 +19,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.hibernate.ejb.criteria.ValueHandlerFactory.BigDecimalValueHandler;
-
-import com.ejemplo.model.Detallecompra;
-import com.ejemplo.model.Ordencompra;
+import com.ejemplo.model.DetalleCompra;
+import com.ejemplo.model.OrdenCompra;
 import com.ejemplo.model.Producto;
 import com.ejemplo.model.Tarjeta;
 import com.ejemplo.persistencia.*;
@@ -68,7 +67,6 @@ public class GrabarCarrito extends HttpServlet {
 		String calle = request.getParameter("calle");
 		String marca = request.getParameter("marca");
 		String telefono = request.getParameter("telefono");
-		
 		String nombre = request.getParameter("nombre");
 		
 		Long nroTrajeta = Long.parseLong(tarjetas);
@@ -102,12 +100,11 @@ public class GrabarCarrito extends HttpServlet {
 		//out.close();
 		HttpSession session = request.getSession();
 		session.removeAttribute("carrito");
-		response.sendRedirect("/web-app/listaProductos");
-
+		response.sendRedirect("/my-webapp/listaProductos");
 	}
 
 	private void cargarTarjeta(Tarjeta tarjeta,Long idCompras) {
-		String persistenceUnitName = "web-app";
+		String persistenceUnitName = "my-webapp";
 		EntityManagerFactory emf = Persistence
 				.createEntityManagerFactory(persistenceUnitName);
 		EntityManager em = emf.createEntityManager();
@@ -124,13 +121,12 @@ public class GrabarCarrito extends HttpServlet {
 			//System.out.println("Id de Tarjeta " + idTAR);
 			
 			em.getTransaction().begin();
-			Ordencompra orden = em.find(Ordencompra.class,idCompras);
+			OrdenCompra orden = em.find(OrdenCompra.class,idCompras);
 			orden.setTarjeta(tarjeta);
 			//dc.setOrdencompra(odc);
 			em.merge(orden);
 			em.getTransaction().commit();
 		
-			
 		} catch (Exception e) {
 			System.out.println("Error al intentar grabar los datos ");
 		} finally {
@@ -185,7 +181,7 @@ public class GrabarCarrito extends HttpServlet {
 		//out.println(json);
 		//out.flush();
 		//out.close();
-		response.sendRedirect("/web-app/listaProductos");
+		response.sendRedirect("/my-webapp/listaProductos");
 	}
 
 }

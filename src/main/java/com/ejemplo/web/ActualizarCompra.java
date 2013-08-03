@@ -1,8 +1,6 @@
 package com.ejemplo.web;
 
 import java.io.IOException;
-import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -12,9 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import com.ejemplo.model.Detallecompra;
-import com.ejemplo.model.Ordencompra;
-import com.ejemplo.persistencia.PersistenciaCore;
+import com.ejemplo.model.OrdenCompra;
 
 /**
  * Servlet implementation class FinalizarCompra
@@ -57,7 +53,7 @@ public class ActualizarCompra extends HttpServlet {
 		EntityTransaction transaction = em.getTransaction();
 		transaction.begin();
 		try {
-			Ordencompra orden = em.find(Ordencompra.class,id);
+			OrdenCompra orden = em.find(OrdenCompra.class,id);
 			orden.setEstado(estado);
 			em.merge(orden);
 			em.getTransaction().commit();

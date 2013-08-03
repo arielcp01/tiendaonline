@@ -74,11 +74,11 @@ public class DetalleCompra implements Serializable {
 		this.ordencompra = ordencompra;
 	}
 	
-	public Integer getProductoId() {
-		return this.productoId;
+	public Long getProductoId() {
+		return this.id;
 	}
 
-	public void setProductoId(Integer productoId) {
-		this.productoId = productoId;
+	public void setProductoId(Long productoId) {
+		this.id = productoId;
 	}
 }

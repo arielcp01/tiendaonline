@@ -54,6 +54,10 @@ public class Producto implements Serializable {
 	public void setCantidad(Integer cantidad) {
 		this.cantidad = cantidad;
 	}
+	
+	public void setRestarCantidad(Integer cantidad) {
+		this.cantidad -= cantidad;
+	}
 
 	public String getDescripcion() {
 		return descripcion;
